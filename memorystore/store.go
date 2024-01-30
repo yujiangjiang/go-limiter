@@ -306,6 +306,10 @@ func (b *bucket) take() (tokens uint64, remaining uint64, reset uint64, ok bool,
 	if b.lastTick < currTick {
 		b.availableTokens = b.maxTokens
 		b.lastTick = currTick
+	}else if currTick < 0 || currTick < b.lastTick {
+		b.startTime = now
+		b.lastTick = 0
+		b.availableTokens = b.maxTokens
 	}
 
 	if b.availableTokens > 0 {
